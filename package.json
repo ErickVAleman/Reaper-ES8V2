@@ -6,9 +6,9 @@
   "scripts": {
     "clean": "rm -rf build && mkdir build",
     "build": "yarn clean && babel src --out-dir build --source-maps inline",
-    "start": "node ./build/index.js",
-    "debug": "nodemon --inspect ./build/index.js",
-    "dev": "nodemon src/index.js --exec babel-node"
+    "start": "node build/www/index.js",
+    "debug": "nodemon --inspect ./build/www/index.js",
+    "dev": "nodemon src/www/index.js --exec babel-node"
   },
   "author": "Erick Villalobos Aleman",
   "license": "MIT",

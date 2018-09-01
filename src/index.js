@@ -1,39 +1,44 @@
-import { createServer as cS } from "http";
-import app from './www/index';
+import express from 'express';
+import bodyParser from 'body-parser';
+import compression from 'compression';
+import cookieParser from 'cookie-parser';
+import cookieSession from 'cookie-session';
+import morgan from 'morgan';
+import vhost from 'vhost';
 
-function normalizePort(num) {
-    let port = parseInt(num,10);
-    if(isNaN(port)) return num
-    if(port >= 0) return port
-    return false
-}
+const app = express();
+const { NODE_ENV } = process.env
 
-function onError(error){
-    if(error.syscall !== 'listen') throw error
-    let bind = typeof port === 'string' ? 'Pipe' + port : 'Port' + port;
-    switch(error.code){
-        case 'EACCES':
-            console.error(bind + ' requires elevated privileges');
-            process.exit(1);
-        break;
-        case 'EADDRINUSE':
-            console.error(bind + ' is already in use');
-            process.exit(1);
-        break;
-        default:
-            throw error;
-    }
-}
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(morgan('dev'));
 
-function onListening(){
-    let addr = server.address();
-    let bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
-    console.debug(`http://${addr.address}:${addr.port}/api/v1`)
-}
+/**
+ * Routes
+ */
+import _index from './routes';
 
-let port = normalizePort(process.env.PORT || 3001)
-app.set('port', port);
-let server = cS(app);
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+/**
+ * index de rutas del API
+ */
+app.use('/api/v1', _index)
+app.use('/',(req, res) => res.status(200).json({message:'Bienvenidos a la API REST'}))
+/**
+ * Errores 404 y 500
+ */
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.type("application/json");
+  res.status(404);
+  res.json({error: 404, message: 'Not Found'});
+});
+  
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.type("application/json");
+  res.status(500);
+  res.json({error: 500, message: 'Error in Server'});
+});
+
+export default app
