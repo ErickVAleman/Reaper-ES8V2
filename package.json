@@ -2,6 +2,9 @@
   "name": "reaperes8",
   "version": "2.0.503",
   "description": "Reaper-ES8 boilerplate basado en express",
+  "repository": {
+    "url": "https://github.com/ErickVAleman/Reaper-ES8V2.git"
+  },
   "main": "src/index.js",
   "scripts": {
     "clean": "rm -rf build && mkdir build",
