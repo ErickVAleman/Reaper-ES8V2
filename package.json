@@ -8,8 +8,8 @@
   "main": "src/index.js",
   "scripts": {
     "clean": "rm -rf build && mkdir build",
-    "build": "yarn clean && babel src --out-dir build --source-maps inline",
-    "start": "node build/www/index.js",
+    "build": "yarn clean && babel src --out-dir build --source-maps inline --copy-files",
+    "start": "set NODE_ENV=production && node build/www/index.js",
     "debug": "nodemon --inspect ./build/www/index.js",
     "dev": "nodemon src/www/index.js --exec babel-node"
   },
@@ -20,12 +20,13 @@
     "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.0",
     "@babel/node": "^7.0.0",
-    "@babel/polyfill": "^7.0.0",
+    "@babel/plugin-transform-runtime": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "@babel/register": "^7.0.0",
     "nodemon": "^1.18.4"
   },
   "dependencies": {
+    "@babel/runtime": "^7.0.0",
     "body-parser": "^1.18.3",
     "compression": "^1.7.3",
     "cookie-parser": "^1.4.3",

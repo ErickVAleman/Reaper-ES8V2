@@ -34,8 +34,6 @@ app.use(compression())
 import _index from './routes';
 
 // Rutas del API
-app.use('/',(req, res) => res.status(200).json({message:'Bienvenidos a la API REST'}))
-app.use('/api',(req, res) => res.status(200).json({message:'Bienvenidos a la API REST'}))
 app.use('/api/v1', _index)
 
 /**
