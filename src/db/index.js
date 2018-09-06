@@ -5,11 +5,13 @@ class connectDatabase {
   /**
    * @param {string} db Especifique la abreviacion de la base de datos que especifico en config.db.json
    * @param {string} query  Especifique la query que desea ejecutar
+   * @param {string} database Especifique la base de datos
    */
-  constructor(db = ``, query = ``) {
+  constructor(db, query, database) {
     this.db = db;
     this.query = query;
-  }
+    this.database = database;
+  } 
 
   async createURL(){
     let db = this.db.toLowerCase();
@@ -21,8 +23,17 @@ class connectDatabase {
       throw new Error(`No existe coneccion con la base de datos \n ${e}`);
     }
   }
-
-  async selectToDb () {
+  async createSpecificURL() {
+    try {
+      let db = this.db.toLowerCase();
+      let sq = new Sequelize(`${config.dialect}://${config.user}:${config.pwd}@${config.url[db]}${config.prefix}:${config.port}/${this.database.toLowerCase()}`);
+      await sq.authenticate()
+      return sq
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+  async rawQuery() {
     try {
       let conn = await this.createURL();
       let res = await conn.query(this.query, { type: conn.QueryTypes.SELECT})
