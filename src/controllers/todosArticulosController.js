@@ -1,10 +1,10 @@
-import db from '../db'
+import connectDatabase from '../db'
+const { createRawQuery } = connectDatabase()
 
 // Esto es un Ejemplo de como usarlo
 async function todosArticulosController (req, res){
   let query = `SELECT Articulo, Nombre, UnidadCompra, UnidadVenta FROM Articulos`;
-  let database = new db('bo',query);
-  let resultado = await database.rawQuery();
+  let resultado = await createRawQuery({suc: 'bo', query})
   res.json(resultado)
 }
 // Fin de ejemplo
