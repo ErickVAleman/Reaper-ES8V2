@@ -1,20 +1,6 @@
-import Sequelize from 'sequelize'
 import db from '../db'
-const articulosModel = async () => {
-  const sq = new db('zr','','spasuper1_201708').createSpecificURL(); 
-  const create = await sq;
-  const Articulos = create.define('Articulos',{
-    where: {
-      Articulo: Sequelize.STRING,
-      Nombre: Sequelize.STRING
-    }
-  })
-  Articulos.findAll({
-    where:{
-      Articulo: '0101007'
-    }
-  })
-}
+
+// Esto es un Ejemplo de como usarlo
 async function todosArticulosController (req, res){
   articulosModel()
   let query = `SELECT Articulo, Nombre, UnidadCompra, UnidadVenta FROM Articulos`;
@@ -22,8 +8,5 @@ async function todosArticulosController (req, res){
   let resultado = await database.rawQuery();
   res.json(resultado)
 }
-
+// Fin de ejemplo
 export default todosArticulosController
-export {
-  articulosModel
-}
