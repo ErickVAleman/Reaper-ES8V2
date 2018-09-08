@@ -1,5 +1,6 @@
 // exportar los controladores
-import todosArticulosController from './todosArticulosController';
+import { Articulos, todosArticulosController } from './todosArticulosController';
 export {
+  Articulos,
   todosArticulosController
 }

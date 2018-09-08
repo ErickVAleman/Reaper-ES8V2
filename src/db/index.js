@@ -46,6 +46,7 @@ function connectDatabase() {
   }
   
   return {
+    createConnection,
     createRawQuery,
     createConnectionToDatabase,
     declareTiendaAlmacen
