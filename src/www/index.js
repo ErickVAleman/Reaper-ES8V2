@@ -27,7 +27,11 @@ function onError(error){
 function onListening(){
     let addr = server.address();
     let bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
-    console.debug(`http://${addr.address}:${addr.port}/api/v1`)
+    console.debug(`
+        Creado por ErickVAleman
+        http://${addr.address}:${addr.port}/api/v1
+        Ctrl + C para salir
+    `)
 }
 
 let port = normalizePort(process.env.PORT || 3001)
